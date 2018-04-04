@@ -5,22 +5,44 @@ var $ = function (id) {
 
 var scores = [];
 var nameScores = [];
+var i = 0;
+var sum = 0;
 
 var displayScores = function () {   
     
+    // loop to display scores and add up the sum of all entries
+    while (i < nameScores.length) {
+        $("scores").value += nameScores[i] + "\n";
+        sum += parseFloat(scores[i]);
+        i++;
+    }
+    
+    // calculates and displays average scores
+    var average = sum / nameScores.length;
+    $("average_score").value = average;
 };
-
 
 
 var addScore = function () {
     
-    if (!isNaN($("score").value )) {
-        scores.push($("score").value);
-        nameScores.push(($("first_name").value) + ", " + ($("last_name").value) + " : " + ($("score").value));
+    // sends a message if the scores value entered is invalid
+    if (isNaN($("score").value) || $("score").value < 0) {
+        alert("Please enter a valid number");
     }
     
-    alert(nameScores);
+    // sends a message if first/last name values entered are blank
+    if ($("first_name").value == "" || $("last_name").value == "") {
+        alert("Please enter a valid name ");
+    }
     
+    // validates and pushes data into the array
+    // validates for a numeric value entry, if the number is positive, and if the first and last name entries are blank 
+    if (!isNaN($("score").value) && $("score").value >= 0 && $("first_name").value != "" && $("last_name").value != "") {
+        parseFloat(scores.push($("score").value));
+        nameScores.push(($("last_name").value) + ", " + ($("first_name").value) + " : " + ($("score").value));
+        displayScores();
+    } 
+
     // get the add form ready for next entry
     $("first_name").value = "";
     $("last_name").value = "";
@@ -31,6 +53,7 @@ var addScore = function () {
 
 var clearScores = function () {   
     
+    // clears the arrays of any data
     scores = [];
     nameScores = [];
     
@@ -40,11 +63,24 @@ var clearScores = function () {
     $("last_name").value = "";
     $("scores").value = "";
     $("score").value = "";
+    
+    // brings cursor back to first name entry text box
     $("first_name").focus();
 };
 
-var sortScores = function () {   
-     
+var sortScores = function () { 
+    
+    // clears value of text box before showing the sorted array
+    $("scores").value = "";
+    
+    // creates a variable that has the sorted array
+    var sort = nameScores.sort();
+    
+    // loop to display newly sorted list
+    for (var j = 0; j < nameScores.length; j++) {
+        $("scores").value += sort[j] + "\n";
+    }
+    
 };
 
 window.onload = function () {
