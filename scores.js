@@ -77,8 +77,8 @@ var sortScores = function () {
     var sort = nameScores.sort();
     
     // loop to display newly sorted list
-    for (var j = 0; j < nameScores.length; j++) {
-        $("scores").value += sort[j] + "\n";
+    for (i = 0; i < nameScores.length; i++) {
+        $("scores").value += sort[i] + "\n";
     }
     
 };
